@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kuis HOTS: Perlawanan terhadap Kolonial</title>
+<style>
+:root{--bg1:#fff3dc;--bg2:#ffe0c8;--card:#fffdf8;--tx:#5a2a1a;--mut:#94654f;--pri:#e8643c;--pri2:#f5a623;--ok:#dcf0c8;--okb:#5fa84a;--bad:#fbd5d0;--badb:#c0392b;--line:#f3d9bf;--sel:#ffe8c9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a1710;--bg2:#33190f;--card:#3a2318;--tx:#ffe9d6;--mut:#d3a98f;--ok:#2c4a22;--bad:#5a2622;--line:#5a3a2a;--sel:#4a2c1c}}
+:root[data-theme="dark"]{--bg1:#2a1710;--bg2:#33190f;--card:#3a2318;--tx:#ffe9d6;--mut:#d3a98f;--ok:#2c4a22;--bad:#5a2622;--line:#5a3a2a;--sel:#4a2c1c}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;color:var(--tx);background:linear-gradient(135deg,var(--bg1),var(--bg2));background-attachment:fixed}
+.wrap{max-width:820px;margin:0 auto;padding:14px;position:relative;z-index:1}
+.scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}.scene svg{width:100%;height:100%;display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene::after{content:"";position:absolute;inset:0;background:rgba(8,20,30,.6)}}
+:root[data-theme="dark"] .scene::after{content:"";position:absolute;inset:0;background:rgba(8,20,30,.6)}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(7px) rotate(1.5deg)}}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(900px)}}
+@keyframes dash{to{stroke-dashoffset:-60}}
+@keyframes wave{0%,100%{transform:translateX(0)}50%{transform:translateX(-24px)}}
+.ship{animation:bob 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.cl{animation:drift 90s linear infinite}.cl.b{animation-duration:130s;animation-delay:-60s}.rt{animation:dash 3s linear infinite}.wv{animation:wave 6s ease-in-out infinite}
+.card{background:color-mix(in srgb,var(--card) 93%,transparent);backdrop-filter:blur(4px)}
+.card{background:var(--card);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(232,100,60,.18);margin-bottom:14px}
+h1{font-size:1.45rem;margin:.2em 0}h2{margin:.2em 0}
+.top{display:flex;align-items:center;gap:12px}
+.mas{width:92px;flex:none}.bub{background:var(--sel);padding:10px 14px;border-radius:16px;font-size:.92rem;flex:1;position:relative}
+.meta{color:var(--mut);font-size:.85rem}
+.btn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:14px;padding:12px 22px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(232,100,60,.3)}
+.btn:disabled{opacity:.5}.btn.alt{background:var(--sel);color:var(--tx);box-shadow:none}
+.pb{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0}.pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .4s}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.tag{background:var(--sel);border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:600}
+.q{font-size:1.05rem;line-height:1.55;margin:12px 0}
+.opt{display:flex;gap:10px;width:100%;text-align:left;background:var(--card);color:var(--tx);border:2px solid var(--line);border-radius:14px;padding:11px 12px;margin:8px 0;font:inherit;cursor:pointer;align-items:flex-start}
+.opt b{background:var(--sel);border-radius:50%;min-width:26px;height:26px;display:grid;place-items:center;font-size:.85rem}
+.opt.on,.it.on{border-color:var(--pri);background:var(--sel)}
+.ok{border-color:var(--okb)!important;background:var(--ok)!important}.bad{border-color:var(--badb)!important;background:var(--bad)!important}
+.tfr{display:flex;gap:8px;align-items:center;margin:8px 0;padding:10px;border:2px solid var(--line);border-radius:14px;flex-wrap:wrap}
+.tfr span{flex:1 1 220px}.tfr button{border:2px solid var(--line);background:var(--card);color:var(--tx);border-radius:10px;padding:6px 14px;font:inherit;cursor:pointer}
+.tfr button.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.it{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;cursor:grab;background:var(--card)}
+.it i{background:var(--pri);color:#fff;border-radius:50%;min-width:26px;height:26px;display:grid;place-items:center;font-style:normal;font-size:.85rem}
+.mrow{display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap}.mrow>span{flex:1 1 150px;font-weight:600}
+.slot{flex:2 1 220px;min-height:46px;border:2px dashed var(--pri);border-radius:12px;padding:4px;display:flex;align-items:center}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding:10px;background:var(--sel);border-radius:14px;min-height:50px}
+.chip{background:var(--card);border:2px solid var(--pri);border-radius:12px;padding:7px 11px;font-size:.9rem;cursor:grab;color:var(--tx)}.chip.on{background:var(--pri2);color:#fff}
+.fb{border-radius:14px;padding:12px 14px;margin:12px 0;line-height:1.5;font-size:.95rem}.fb.hide{display:none}.fb.g{background:var(--ok)}.fb.r{background:var(--bad)}.fb.y{background:var(--sel)}
+.hint{font-size:.8rem;color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}th,td{padding:8px;border-bottom:1px solid var(--line);text-align:center}th:first-child,td:first-child{text-align:left}
+.big{font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hide{display:none}.rk{min-width:640px}.rk td,.rk th{text-align:left!important;vertical-align:top}.rk td:first-child{font-weight:600}footer{text-align:center;color:var(--mut);font-size:.8rem;padding:8px}
+@keyframes jump{0%,100%{transform:translateY(0)}30%{transform:translateY(-18px) rotate(-5deg)}60%{transform:translateY(-6px) rotate(5deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.mas svg{animation:float 3s ease-in-out infinite}.mas.happy svg{animation:jump .8s}.mas.sad svg{animation:shake .6s}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+</style></head><body>
+<canvas id="cf"></canvas>
+<div class="scene" aria-hidden="true"><svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf8a"/><stop offset="1" stop-color="#fff0c8"/></linearGradient><linearGradient id="sa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7a65e"/><stop offset="1" stop-color="#e8643c"/></linearGradient></defs>
+<rect width="800" height="600" fill="url(#sk)"/>
+<circle cx="660" cy="100" r="40" fill="#ffd23f" opacity=".95"/><circle cx="660" cy="100" r="62" fill="#ffd23f" opacity=".3"/>
+<g class="cl" opacity=".85"><ellipse cx="0" cy="90" rx="60" ry="16" fill="#fff"/><ellipse cx="28" cy="76" rx="34" ry="16" fill="#fff"/></g>
+<g class="cl b" opacity=".7"><ellipse cx="0" cy="190" rx="70" ry="14" fill="#fff"/><ellipse cx="-24" cy="178" rx="36" ry="14" fill="#fff"/></g>
+<g transform="translate(110 120)" opacity=".6"><circle r="44" fill="none" stroke="#c2452d" stroke-width="2"/><circle r="36" fill="none" stroke="#c2452d" stroke-dasharray="2 5"/><path d="M0-42L7-7 42 0 7 7 0 42-7 7-42 0-7-7Z" fill="#f5a623"/><path d="M0-42L7-7-7-7Z" fill="#d62b1f"/><text y="-50" text-anchor="middle" font-size="14" font-family="serif" fill="#8a3a1a">U</text></g>
+<path d="M0 330 L90 250 L160 310 L250 220 L350 320 L440 260 L540 330 L640 240 L720 300 L800 260 L800 400 L0 400Z" fill="#f5b36a" opacity=".8"/>
+<path d="M0 360 L120 300 L220 350 L330 290 L450 360 L560 300 L680 350 L800 310 L800 420 L0 420Z" fill="#e5834d" opacity=".85"/>
+<g transform="translate(560 360)"><path d="M-70 40Q0-20 70 40Z" fill="#f3e6c0"/><path d="M0 6L-4-40" stroke="#8a6a4a" stroke-width="4"/><path d="M-4-40Q-30-52-40-34M-4-40Q20-58 34-38M-4-40Q-18-60-4-62" stroke="#d4691e" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+<rect y="400" width="800" height="200" fill="url(#sa)"/>
+<g class="wv" fill="none" stroke="#fff" stroke-width="3" opacity=".5" stroke-linecap="round"><path d="M40 440q20-12 40 0t40 0"/><path d="M300 470q20-12 40 0t40 0"/><path d="M560 450q20-12 40 0t40 0"/><path d="M120 540q20-12 40 0t40 0"/><path d="M620 560q20-12 40 0t40 0"/></g>
+<path class="rt" d="M120 560Q250 470 380 520T620 470" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="8 8" opacity=".75"/>
+<text x="626" y="480" font-size="26" font-weight="bold" fill="#b3261e" opacity=".9">✕</text>
+<g class="ship" transform="translate(250 400)"><path d="M-60 40L60 40 44 70-44 70Z" fill="#b98b64"/><path d="M-60 40L60 40" stroke="#8a6a4a" stroke-width="4"/><rect x="-3" y="-70" width="6" height="110" fill="#8a6a4a"/><path d="M6-66Q56-30 6 30Z" fill="#fff"/><path d="M-6-56Q-46-24-6 30Z" fill="#f4fbfd"/><path d="M3-70L3-92 28-84 3-78Z" fill="#d62b1f"/></g>
+</svg></div>
+<div class="wrap">
+<div class="card" id="start">
+ <div class="top"><div class="mas" id="m0"></div><div class="bub">Halo! Aku Si Nusa 🌿 Yuk uji kemampuan analisismu tentang perlawanan bangsa Indonesia terhadap kolonial!</div></div>
+ <h1>🧭 Kuis HOTS Sejarah Indonesia</h1>
+ <h2 style="font-size:1.1rem">Perlawanan Bangsa Indonesia terhadap Kolonial sebelum Abad ke-20</h2>
+ <p class="meta">Kelas XI / Fase F &middot; 10 soal HOTS &middot; 5 jenis soal &middot; skor maksimal 100</p>
+ <p><b>Materi:</b> penyebab, jalannya, dan akhir perlawanan Maluku, Mataram, Banten, Makassar, Padri, Diponegoro, Aceh, Banjar, dan Bali.</p>
+ <p><b>Tujuan Pembelajaran:</b> Siswa dapat menjelaskan perlawanan bangsa Indonesia terhadap kolonial sebelum abad ke-20.</p>
+ <p class="hint">Tips: pada soal drag &amp; drop, kamu bisa menyeret atau cukup mengetuk dua item untuk bertukar tempat. Aktifkan suara untuk efek audio.</p>
+ <button class="btn" id="go">Mulai Kuis ▶</button>
+</div>
+
+<div class="hide" id="quiz">
+ <div class="card">
+  <div class="top"><div class="mas" id="m1"></div><div class="bub" id="say">Baca konteks soal dengan teliti, ya!</div></div>
+  <div class="pb"><i id="bar"></i></div>
+  <div class="row"><span class="meta" id="no"></span><span class="tag" id="tag"></span><span class="meta">Skor: <b id="sc">0</b></span></div>
+ </div>
+ <div class="card">
+  <div class="q" id="q"></div><div id="body"></div>
+  <div class="fb hide" id="fb"></div>
+  <div class="row"><span></span><span><button class="btn" id="chk">Periksa Jawaban</button><button class="btn hide" id="next">Lanjut ➜</button></span></div>
+ </div>
+</div>
+
+<div class="hide" id="res">
+ <div class="card" style="text-align:center">
+  <div class="top"><div class="mas" id="m2"></div><div class="bub" id="msg"></div></div>
+  <div class="meta">Skor Akhir</div><div class="big" id="fs"></div>
+  <div class="meta" id="sum"></div>
+ </div>
+ <div class="card"><h2 style="font-size:1.1rem">Rincian per Jenis Soal</h2>
+  <div style="overflow-x:auto"><table><thead><tr><th>Jenis Soal</th><th>Soal</th><th>Benar</th><th>Salah</th><th>Skor</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <p class="hint">“Benar” berarti seluruh bagian jawaban tepat; jawaban sebagian benar tetap mendapat skor parsial.</p>
+ </div>
+ <div class="card"><h2 style="font-size:1.1rem">Rangkuman Materi</h2><div style="overflow-x:auto" id="rk"></div></div>
+ <div class="card"><h2 style="font-size:1.1rem">Refleksi</h2><div id="ref"></div>
+  <button class="btn" onclick="location.reload()">Ulangi Kuis 🔄</button></div>
+</div>
+<footer>Dikembangkan oleh <b>Evi Kuraesin, S.Pd</b> &middot; SMAN 1 Parongpong</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const TN={mc:"Pilihan Ganda",mr:"Pilihan Ganda Kompleks",ord:"Drag & Drop: Mengurutkan",tf:"Benar / Salah",mt:"Drag & Drop: Menjodohkan"};
+const Q=[
+{t:"mt",q:"Pasangkan perlawanan dengan PENYEBAB utamanya! Seret (atau ketuk) pilihan ke kotak yang tepat.",
+ pairs:[["Perlawanan Maluku (1817)","Beban pajak, kerja paksa, dan uang kertas murah"],["Perlawanan Mataram (1628)","Ambisi Sultan Agung mengusir VOC dari Jawa"],["Perlawanan Banten (1680)","Monopoli lada VOC dan konflik ayah-anak"],["Perlawanan Makassar (1666)","VOC ingin mengakhiri pelabuhan dagang bebas"],["Perang Padri (1821)","Pertentangan kaum Adat dan kaum Padri"]],
+ e:"Maluku: Belanda kembali berkuasa 1817 dan membebani rakyat dengan pajak, kerja paksa, serta uang kertas. Mataram: Sultan Agung ingin menyingkirkan VOC dari Batavia. Banten: VOC memonopoli lada dan memanfaatkan perebutan takhta Sultan Ageng dan Sultan Haji. Makassar: VOC ingin menguasai rempah di pelabuhan bebas. Padri: konflik Adat–Padri yang dimanfaatkan Belanda."},
+{t:"mt",q:"Pasangkan perang berikut dengan PENYEBAB utamanya! Seret (atau ketuk) pilihan ke kotak yang tepat.",
+ pairs:[["Perang Diponegoro (1825)","Pematokan jalan melintasi makam leluhur"],["Perang Aceh (1873)","Aceh menolak tunduk setelah Traktat Sumatera"],["Perang Banjar (1859)","Campur tangan Belanda dalam suksesi kesultanan"],["Perang Bali (1846)","Penolakan raja atas penghapusan Tawan Karang"]],
+ e:"Diponegoro: patok jalan di tanah makam di Tegalrejo, campur tangan istana, dan beban pajak. Aceh: Traktat Sumatera 1871 membuka jalan bagi Belanda, lalu perang dinyatakan 1873. Banjar: Belanda ikut menentukan pengganti sultan dan ingin menguasai tambang batubara. Bali: Belanda menuntut penghapusan Tawan Karang (hak menyita kapal terdampar)."},
+{t:"mc",q:"Sultan Agung dua kali menyerang Batavia (1628 dan 1629) dengan pasukan besar, tetapi kedua serangan gagal. Analisis yang paling tepat tentang jalannya perang dan penyebab kegagalannya adalah ...",
+ o:["Sultan Agung berdamai dengan VOC sebelum pertempuran dimulai","Pasukan Mataram tidak mau menyerang benteng VOC di Batavia","Perbekalan terbatas, lumbung dibakar VOC, dan wabah melanda pasukan","Kerajaan lain di Jawa membantu VOC sejak awal pertempuran"],a:2,
+ e:"Jarak jauh membuat logistik Mataram sulit. VOC membakar lumbung padi di Tegal dan Cirebon, dan wabah menyerang pasukan (J.P. Coen wafat 1629). Akhirnya Batavia gagal direbut; Mataram melemah setelah Sultan Agung wafat 1645."},
+{t:"mr",q:"Perhatikan jalannya perlawanan Makassar dan Banten. Pilih SEMUA pernyataan yang benar!",
+ o:["Arung Palakka dari Bone membantu VOC menyerang Makassar","Sultan Haji meminta bantuan VOC dalam perebutan kekuasaan Banten","Sultan Ageng menyerahkan Banten kepada VOC sebelum perang pecah","Benteng Somba Opu di Makassar jatuh ke tangan VOC tahun 1669"],a:[0,1,3],
+ e:"Keduanya melemah akibat politik adu domba VOC. Makassar menghadapi VOC bersama pasukan Arung Palakka sampai Somba Opu jatuh 1669. Di Banten, Sultan Ageng melawan VOC dan putranya yang didukung VOC; ia tidak menyerahkan Banten sebelum perang."},
+{t:"ord",q:"Urutkan sembilan perlawanan berikut berdasarkan awal terjadinya (dari yang paling awal)!",
+ items:["Perlawanan Mataram (1628)","Perlawanan Makassar (1666)","Perlawanan Banten (1680)","Perlawanan Pattimura di Maluku (1817)","Perang Padri (1821)","Perang Diponegoro (1825)","Perang Bali (1846)","Perang Banjar (1859)","Perang Aceh (1873)"],
+ e:"Perlawanan terjadi sejak masa VOC (abad ke-17) hingga masa pemerintah Hindia Belanda (abad ke-19), sehingga kronologi membantu melihat perubahan bentuk penjajahan dari monopoli dagang menjadi penguasaan wilayah."},
+{t:"mc",q:"Pada 1893 Teuku Umar berpura-pura bekerja sama dengan Belanda, lalu kembali melawan dengan membawa senjata dan pasukan. Strategi ini menunjukkan bahwa ...",
+ o:["Teuku Umar benar-benar berpihak kepada Belanda sampai akhir hidupnya","Perlawanan Aceh memanfaatkan siasat untuk melemahkan Belanda dari dalam","Rakyat Aceh telah menyerah sehingga perang berhenti pada tahun 1893","Belanda mudah dikalahkan sehingga tidak memerlukan taktik tertentu"],a:1,
+ e:"Perang Aceh berlangsung lama dengan gerilya dan siasat. Teuku Umar gugur 1899 dan perjuangan dilanjutkan Cut Nyak Dhien. Belanda baru menekan Aceh lewat strategi Snouck Hurgronje dan pasukan Marsose; Sultan Daud Syah menyerah 1903."},
+{t:"tf",q:"Tentukan Benar atau Salah pernyataan tentang AKHIR perlawanan berikut!",
+ s:[["Pattimura ditangkap dan dihukum gantung di Ambon pada Desember 1817",1],["Imam Bonjol ditangkap Belanda setelah Benteng Bonjol jatuh tahun 1837",1],["Pangeran Diponegoro gugur dalam pertempuran terakhir di Magelang tahun 1830",0],["Pangeran Antasari ditangkap Belanda lalu diasingkan ke Manado",0]],
+ e:"Diponegoro ditangkap saat perundingan di Magelang (1830) lalu diasingkan ke Manado dan Makassar. Antasari wafat 1862 karena sakit di tengah perlawanan; Pangeran Hidayatullah yang ditangkap dan diasingkan ke Cianjur, dan sisa perlawanan Banjar baru padam 1905."},
+{t:"mc",q:"Perjanjian Bongaya (1667) menjadi titik balik perlawanan Makassar, dan Somba Opu jatuh pada 1669. Dampak jangka panjang yang paling tepat dari akhir perlawanan itu adalah ...",
+ o:["Makassar menjadi pusat perdagangan bebas yang kian jaya di Nusantara","VOC meninggalkan Sulawesi Selatan dan mengembalikan Benteng Somba Opu","Arung Palakka dihukum VOC karena membantu Sultan Hasanuddin melawan","VOC memegang monopoli dan Makassar kehilangan peran dagang bebasnya"],a:3,
+ e:"Bongaya memaksa Makassar mengakui monopoli VOC dan mengurangi wilayahnya. Pelabuhan bebas yang menjadi sumber kekuatan Makassar pun hilang."},
+{t:"mr",q:"Perhatikan jalannya Perang Bali (1846–1849). Pilih SEMUA pernyataan yang benar!",
+ o:["Patih I Gusti Ketut Jelantik memimpin perlawanan rakyat Buleleng","Benteng Jagaraga sempat bertahan sebelum jatuh ke Belanda pada 1849","Rakyat Bali menyerah tanpa perlawanan setelah Belanda tiba di Buleleng","Pasukan Bali memilih bertempur sampai habis dalam semangat puputan"],a:[0,1,3],
+ e:"Belanda menyerang Buleleng 1846 dan 1848, tetapi rakyat bertahan di Jagaraga di bawah Jelantik. Setelah Jagaraga jatuh April 1849, kekuasaan Belanda atas Bali meluas bertahap. Pernyataan ketiga keliru karena perlawanan sangat gigih."},
+{t:"mc",q:"Setelah mempelajari perlawanan Maluku, Mataram, Banten, Makassar, Padri, Diponegoro, Aceh, Banjar, dan Bali, manakah kesimpulan tentang benang merah penyebabnya yang paling tepat?",
+ o:["Persaingan antarkerajaan daerah memperebutkan wilayah dagang","Penindasan ekonomi dan campur tangan politik pihak kolonial","Kemajuan teknologi senjata yang dimiliki rakyat Nusantara","Kebijakan Belanda yang memajukan pendidikan seluruh rakyat"],a:1,
+ e:"Di semua daerah, monopoli, pajak, kerja paksa, dan intervensi politik memicu perlawanan. Karena bersifat kedaerahan dan dipecah dengan adu domba, hampir semuanya berakhir kalah, tetapi menjadi inspirasi persatuan bangsa."}
+];
+const R=[
+["Maluku (Pattimura, 1817)","Belanda kembali berkuasa; pajak, kerja paksa, uang kertas murah","Merebut Benteng Duurstede di Saparua, residen tewas, bala bantuan Belanda datang","Pattimura ditangkap dan digantung di Ambon, Desember 1817"],
+["Mataram (Sultan Agung, 1628–1629)","Ingin mengusir VOC yang menghalangi dominasi Mataram di Jawa","Dua serangan ke Batavia; lumbung dibakar VOC dan wabah menyerang pasukan","Gagal merebut Batavia; Mataram melemah setelah 1645"],
+["Banten (Sultan Ageng, 1680–1683)","Monopoli lada VOC dan konflik Sultan Ageng dengan Sultan Haji","Sultan Haji dibantu VOC; Sultan Ageng terdesak dari Tirtayasa","Sultan Ageng ditangkap 1683, wafat 1692; Banten tunduk pada VOC"],
+["Makassar (Hasanuddin, 1666–1669)","VOC ingin memonopoli rempah dan mengakhiri pelabuhan bebas","VOC bersekutu dengan Arung Palakka; pertempuran darat dan laut","Perjanjian Bongaya 1667; Somba Opu jatuh 1669"],
+["Padri (Imam Bonjol, 1821–1837)","Konflik kaum Adat dan Padri; Belanda ikut campur","Belanda mengepung benteng; Plakat Panjang 1833; Adat dan Padri bersatu","Bonjol jatuh dan Imam Bonjol ditangkap 1837"],
+["Diponegoro (1825–1830)","Patok makam, campur tangan istana, pajak dan pintu tol","Gerilya bersama Kyai Mojo dan Sentot; Belanda memakai benteng stelsel","Ditangkap saat perundingan di Magelang 1830, diasingkan ke Manado dan Makassar"],
+["Aceh (1873–1904)","Aceh menolak tunduk; Belanda memanfaatkan Traktat Sumatera","Gerilya Teuku Umar dan Cut Nyak Dhien; siasat Snouck Hurgronje dan Marsose","Sultan Daud Syah menyerah 1903; perlawanan padam sekitar 1904"],
+["Banjar (Antasari, 1859–1905)","Campur tangan Belanda dalam suksesi dan tambang batubara","Serangan ke tambang Pengaron 1859; Antasari diangkat pemimpin 1862","Antasari wafat 1862, Hidayatullah ditangkap; sisa perlawanan padam 1905"],
+["Bali (Jelantik, 1846–1849)","Belanda menuntut penghapusan hak Tawan Karang","Perlawanan Buleleng di bawah Ketut Jelantik; bertahan di Jagaraga","Jagaraga jatuh 1849; Belanda memperluas kekuasaan di Bali"]
+];
+const SAY={ok:["Hebat! Analisismu tajam! 🎉","Mantap, lanjutkan! 🌟","Betul sekali! 👏"],no:["Tidak apa-apa, baca penjelasannya ya 💪","Hampir! Pelajari konsepnya 📖","Semangat, belajar dari kesalahan! 🌱"]};
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const mascot=`<svg viewBox="0 0 120 120"><path d="M60 14 Q56 4 46 6 Q50 16 58 18Z" fill="#e8643c"/><path d="M60 14 Q68 2 78 6 Q72 16 62 18Z" fill="#ffc83d"/>
+<ellipse cx="60" cy="68" rx="46" ry="42" fill="#f7a24b"/><ellipse cx="60" cy="80" rx="30" ry="24" fill="#ffe3b3"/>
+<circle cx="42" cy="58" r="11" fill="#fff"/><circle cx="78" cy="58" r="11" fill="#fff"/><circle class="pu" cx="44" cy="60" r="5" fill="#5a2a1a"/><circle class="pu" cx="76" cy="60" r="5" fill="#5a2a1a"/>
+<ellipse cx="30" cy="76" rx="7" ry="4" fill="#f7b9c0" opacity=".7"/><ellipse cx="90" cy="76" rx="7" ry="4" fill="#f7b9c0" opacity=".7"/>
+<path class="mo" d="M44 76 Q60 84 76 76" stroke="#5a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`;
+["m0","m1","m2"].forEach(id=>$("#"+id).innerHTML=mascot);
+function mood(k){const mo=["happy","sad",""];document.querySelectorAll(".mas").forEach(m=>{m.classList.remove("happy","sad");void m.offsetWidth;if(k)m.classList.add(k);m.querySelector(".mo").setAttribute("d",k=="happy"?"M42 72 Q60 94 78 72":k=="sad"?"M44 84 Q60 70 76 84":"M44 76 Q60 84 76 76")})}
+let AC;function tone(seq){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;seq.forEach(([f,d,ty])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=ty||"sine";o.frequency.value=f;g.gain.setValueAtTime(.16,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);t+=d*.85})}catch(e){}}
+const SND={ok:[[660,.12],[880,.22]],no:[[260,.22,"triangle"],[190,.32,"triangle"]],fin:[[523,.14],[659,.14],[784,.14],[1047,.4]]};
+
+let i=0,done=false,sel,arr,selp,place,bank,chipSel,drag,res=[];
+const total=()=>res.reduce((s,r)=>s+r.sc,0);
+$("#go").onclick=()=>{tone([[440,.08]]);$("#start").classList.add("hide");$("#quiz").classList.remove("hide");show()};
+function show(){const q=Q[i];done=false;drag=null;selp=null;chipSel=null;const b=$("#body");b.innerHTML="";
+ $("#fb").className="fb hide";$("#next").classList.add("hide");$("#chk").classList.remove("hide");
+ $("#no").textContent="Soal "+(i+1)+" dari "+Q.length;$("#tag").textContent=TN[q.t];$("#bar").style.width=(i/Q.length*100)+"%";$("#sc").textContent=total();$("#q").textContent=q.q;
+ $("#say").textContent="Baca konteks soal dengan teliti, ya!";mood("");
+ if(q.t=="mc"||q.t=="mr"){sel=[];q.o.forEach((o,k)=>{const d=document.createElement("button");d.className="opt";d.innerHTML="<b>"+"ABCD"[k]+"</b><span>"+o+"</span>";
+  d.onclick=()=>{if(done)return;sel=q.t=="mc"?[k]:(sel.includes(k)?sel.filter(x=>x!=k):sel.concat(k));[...b.children].forEach((c,j)=>c.classList.toggle("on",sel.includes(j)))};b.appendChild(d)});
+  if(q.t=="mr"){const h=document.createElement("div");h.className="hint";h.textContent="Boleh memilih lebih dari satu jawaban.";b.appendChild(h)}}
+ else if(q.t=="tf"){sel=q.s.map(()=>null);q.s.forEach((s,k)=>{const r=document.createElement("div");r.className="tfr";r.innerHTML="<span>"+s[0]+"</span><button>Benar</button><button>Salah</button>";
+  [...r.querySelectorAll("button")].forEach((bt,v)=>bt.onclick=()=>{if(done)return;sel[k]=v==0?1:0;[...r.querySelectorAll("button")].forEach((x,y)=>x.classList.toggle("on",y==v))});b.appendChild(r)})}
+ else if(q.t=="ord"){do{arr=shuf(q.items.map((_,k)=>k))}while(arr.every((v,k)=>v==k));rOrd()}
+ else{place=q.pairs.map(()=>-1);bank=shuf(q.pairs.map((_,k)=>k));rMt()}}
+function rOrd(){const q=Q[i],b=$("#body");b.innerHTML="";arr.forEach((v,p)=>{const d=document.createElement("div");d.className="it"+(selp==p?" on":"");d.draggable=!done;
+ d.innerHTML="<i>"+(p+1)+"</i><span>"+q.items[v]+"</span>";
+ d.ondragstart=e=>{drag=p;e.dataTransfer.setData("text","x")};d.ondragover=e=>e.preventDefault();
+ d.ondrop=e=>{e.preventDefault();if(done||drag==null)return;const m=arr.splice(drag,1)[0];arr.splice(p,0,m);drag=null;selp=null;rOrd()};
+ d.onclick=()=>{if(done)return;if(selp==null)selp=p;else{[arr[selp],arr[p]]=[arr[p],arr[selp]];selp=null}rOrd()};b.appendChild(d)});
+ const h=document.createElement("div");h.className="hint";h.textContent="Seret item, atau ketuk dua item untuk bertukar posisi.";b.appendChild(h)}
+function rMt(){const q=Q[i],b=$("#body");b.innerHTML="";
+ q.pairs.forEach((p,k)=>{const r=document.createElement("div");r.className="mrow";r.innerHTML="<span>"+p[0]+"</span>";const s=document.createElement("div");s.className="slot";
+  if(place[k]>=0){const c=document.createElement("span");c.className="chip";c.textContent=q.pairs[place[k]][1];s.appendChild(c)}
+  s.ondragover=e=>e.preventDefault();s.ondrop=e=>{e.preventDefault();if(!done&&drag!=null)put(k,drag)};
+  s.onclick=()=>{if(done)return;if(chipSel!=null)put(k,chipSel);else if(place[k]>=0){place[k]=-1;rMt()}};r.appendChild(s);b.appendChild(r)});
+ const bk=document.createElement("div");bk.className="bank";bank.filter(c=>!place.includes(c)).forEach(c=>{const d=document.createElement("span");d.className="chip"+(chipSel==c?" on":"");d.textContent=q.pairs[c][1];d.draggable=!done;
+  d.ondragstart=e=>{drag=c;e.dataTransfer.setData("text","x")};d.onclick=()=>{if(done)return;chipSel=chipSel==c?null:c;rMt()};bk.appendChild(d)});b.appendChild(bk)}
+function put(k,c){place[k]=c;chipSel=null;drag=null;rMt()}
+
+$("#chk").onclick=()=>{if(done)return;const q=Q[i];let f=0,extra="";
+ if(q.t=="mc"){if(!sel.length)return alert("Pilih satu jawaban dulu ya.");f=sel[0]==q.a?1:0;
+  [...$("#body").children].forEach((c,j)=>{c.classList.remove("on");if(j==q.a)c.classList.add("ok");else if(sel.includes(j))c.classList.add("bad")})}
+ else if(q.t=="mr"){if(!sel.length)return alert("Pilih minimal satu jawaban dulu ya.");const tp=sel.filter(x=>q.a.includes(x)).length,fp=sel.length-tp;f=Math.max(0,(tp-fp)/q.a.length);
+  [...$("#body").querySelectorAll(".opt")].forEach((c,j)=>{c.classList.remove("on");if(q.a.includes(j))c.classList.add("ok");else if(sel.includes(j))c.classList.add("bad")})}
+ else if(q.t=="tf"){if(sel.includes(null))return alert("Jawab semua pernyataan dulu ya.");let n=0;[...$("#body").children].forEach((r,k)=>{const okk=sel[k]==q.s[k][1];if(okk)n++;r.classList.add(okk?"ok":"bad")});f=n/q.s.length;
+  extra="<br><b>Kunci:</b> "+q.s.map((s,k)=>(k+1)+"="+(s[1]?"Benar":"Salah")).join(", ")}
+ else if(q.t=="ord"){let n=arr.filter((v,k)=>v==k).length;f=n/arr.length;done=true;rOrd();[...$("#body").querySelectorAll(".it")].forEach((c,k)=>c.classList.add(arr[k]==k?"ok":"bad"));
+  extra="<br><b>Urutan benar:</b> "+q.items.map((t,k)=>(k+1)+". "+t).join("; ")}
+ else{if(place.includes(-1))return alert("Pasangkan semua pilihan dulu ya.");let n=place.filter((c,k)=>c==k).length;f=n/place.length;done=true;rMt();[...$("#body").querySelectorAll(".slot")].forEach((s,k)=>s.classList.add(place[k]==k?"ok":"bad"));
+  extra="<br><b>Pasangan benar:</b> "+q.pairs.map(p=>p[0]+" → "+p[1]).join("; ")}
+ done=true;const sc=Math.round(f*10),ok=f==1;res.push({t:q.t,sc,ok});
+ const fb=$("#fb");fb.className="fb "+(ok?"g":f>0?"y":"r");
+ fb.innerHTML="<b>"+(ok?"✅ Benar! +10 poin":f>0?"🟡 Sebagian benar. +"+sc+" poin":"❌ Belum tepat. +0 poin")+"</b><br>"+q.e+extra;
+ $("#sc").textContent=total();$("#say").textContent=rnd(ok?SAY.ok:SAY.no);mood(ok?"happy":"sad");tone(ok?SND.ok:SND.no);
+ $("#chk").classList.add("hide");$("#next").classList.remove("hide");$("#next").textContent=i==Q.length-1?"Lihat Hasil 🏁":"Lanjut ➜"};
+$("#next").onclick=()=>{if(i<Q.length-1){i++;show();window.scrollTo(0,0)}else fin()};
+
+function fin(){$("#quiz").classList.add("hide");$("#res").classList.remove("hide");window.scrollTo(0,0);
+ const S=total(),nb=res.filter(r=>r.ok).length;$("#fs").textContent=S;$("#sum").textContent=nb+" soal benar sempurna, "+(Q.length-nb)+" soal belum sempurna";
+ let m,r;if(S>=85){m="Luar biasa! Kamu menguasai materi dengan sangat baik 🏆";r="Kamu mampu menganalisis sebab, proses, dan dampak perlawanan. Tantangan: bandingkan dua perlawanan daerah dan jelaskan mengapa persatuan nasional baru terwujud pada abad ke-20."}
+ else if(S>=70){m="Bagus! Pemahamanmu sudah baik 🌟";r="Sebagian besar konsep sudah kamu kuasai. Ulangi bagian yang masih keliru, terutama hubungan sebab-akibat dan kronologi peristiwa."}
+ else if(S>=50){m="Cukup baik, terus berlatih! 🌱";r="Coba baca ulang materi perlawanan Maluku, Padri, Diponegoro, dan Aceh. Buat peta konsep: penyebab, tokoh, strategi, dan akhir perlawanan."}
+ else{m="Jangan menyerah, belajar adalah proses 💪";r="Mulailah dari garis waktu perlawanan, lalu pahami penyebab umumnya: monopoli, pajak, kerja paksa, dan campur tangan politik. Lalu coba kuis ini lagi."}
+ $("#msg").textContent=m;$("#ref").innerHTML="<p>"+r+"</p><p class=meta>Pertanyaan renungan: Jika kamu hidup pada masa itu, strategi apa yang bisa menyatukan perlawanan antardaerah?</p>";
+ $("#tb").innerHTML=Object.keys(TN).map(k=>{const a=res.filter(x=>x.t==k);if(!a.length)return"";const b=a.filter(x=>x.ok).length;return"<tr><td>"+TN[k]+"</td><td>"+a.length+"</td><td>"+b+"</td><td>"+(a.length-b)+"</td><td>"+a.reduce((s,x)=>s+x.sc,0)+"/"+a.length*10+"</td></tr>"}).join("");
+ $("#rk").innerHTML="<table class=rk><thead><tr><th>Perlawanan</th><th>Penyebab</th><th>Jalannya</th><th>Akhir</th></tr></thead><tbody>"+R.map(r=>"<tr>"+r.map(c=>"<td>"+c+"</td>").join("")+"</tr>").join("")+"</tbody></table>";mood(S>=70?"happy":"");tone(SND.fin);if(S>=70)confetti()}
+
+function confetti(){const c=$("#cf"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;const cols=["#e8643c","#f5a623","#ffd23f","#d62b1f","#ff8a4c","#ffe08a"];
+ const P=Array.from({length:170},()=>({x:Math.random()*c.width,y:-Math.random()*c.height*.6,w:6+Math.random()*7,h:8+Math.random()*8,vy:2+Math.random()*3,vx:-1.5+Math.random()*3,r:Math.random()*6,vr:-.2+Math.random()*.4,c:rnd(cols)}));let t=0;
+ (function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(++t<320)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
+</script></body></html>
